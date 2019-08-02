@@ -50,9 +50,9 @@ create() {
 
   echo 'Please follow the below instructions                    '
   echo '********************************************************'
-  echo '1. Install (or Run) Tunnelblink                         '
+  echo '1. Install (or Run) Tunnelblick                         '
   echo '2. Run open ./DockerForMac.ovpn                         '
-  echo '3. In Tunnelblink, select `Connect DockerForMac`        '
+  echo '3. In Tunnelblick, select `Connect DockerForMac`        '
   echo '4. Wait for the server response (it will take a minute) '
 
   printf "${NOCOLOR}\n"
@@ -67,7 +67,7 @@ destroy() {
   printf "${TICK}\n"
 
   printf "${WHITE}\n"
-  echo 'In Tunnelblink, select `Disconnect DockerForMac` '
+  echo 'In Tunnelblick, select `Disconnect DockerForMac` '
   printf "${NOCOLOR}\n"
 }
 
