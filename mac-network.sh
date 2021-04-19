@@ -24,6 +24,11 @@ TICK='\xE2\x9C\x94'
 CROSS='\xE2\x9D\x8C'
 
 create() {
+  NETWORK_PARAM=
+  if [ -n "${1:-}" ] ; then
+    NETWORK_PARAM="--network ${1}"
+  fi
+
   command -v docker > /dev/null 2>&1 || { echo >&2 "couldn't find docker client. Aborting..."; exit 1; }
 
   [ ! "$(docker ps | grep docker-openvpn)" ] || { echo 'It seems VPN is already running. Do Nothing.'; exit 1; }
@@ -50,7 +55,7 @@ create() {
   check "$error"
 
   printf "Starting vpn server .............."
-  error=$(docker run --dns 8.8.8.8 --restart=always -v ovpn-data:/etc/openvpn --name docker-openvpn -d -p 1194:1194/udp --cap-add=NET_ADMIN $DOCKER_IMAGE 2>&1 >/dev/null)
+  error=$(docker run --dns 8.8.8.8 --restart=always -v ovpn-data:/etc/openvpn --name docker-openvpn ${NETWORK_PARAM} -d -p 1194:1194/udp --cap-add=NET_ADMIN $DOCKER_IMAGE 2>&1 >/dev/null)
   check "$error"
 
   printf "Exporting client certificate ....."
@@ -95,7 +100,7 @@ check() {
 
 case "$1" in
   create)
-    create
+    create ${2:-}
     ;;
   destroy)
     destroy
